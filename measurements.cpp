@@ -6,14 +6,14 @@
 #define TEMP_COEF 0.01  // Temperature Coefficient
 #define VOLT_AT_0 0.5   // Sensor Output Voltage at 0°C
 #define NUMBER_OF_SAMPLES 10
-#define TEMP_CALIBRATION_COEF 3
+#define TEMP_CALIBRATION_COEF 2
 #define SUPPLY_CALIBRATION_COEF 0.15
 
 const uint8_t ambient_temp_pin = A8;
 const uint8_t supply_voltage_pin = A9;
 
 temperature_sensor_handle_t temp_sensor = NULL;
-const temperature_sensor_config_t temp_sensor_config = TEMPERATURE_SENSOR_CONFIG_DEFAULT(10, 50);
+const temperature_sensor_config_t temp_sensor_config = TEMPERATURE_SENSOR_CONFIG_DEFAULT(-10, 80);
 
 void Measurements::configure() {
   pinMode(ambient_temp_pin, INPUT);

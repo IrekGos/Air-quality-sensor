@@ -1,4 +1,3 @@
-#include <sys/_stdint.h>
 // HM3301 dust sensor datasheet:
 // https://files.seeedstudio.com/wiki/Grove-Laser_PM2.5_Sensor-HM3301/res/HM-3300%263600_V2.1.pdf
 
@@ -65,7 +64,7 @@ void DustSensor::parse_result(uint8_t *raw_bytes, measurement_result *result) {
 }
 
 bool DustSensor::are_values_correct(measurement_result *result) {
-  int bad_value = 1 << 16 - 1;
+  int bad_value = (1 << 16) - 1;
   return result->pm1 != bad_value && result->pm2_5 != bad_value && result->pm10 != bad_value;
 }
 

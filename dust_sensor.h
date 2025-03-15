@@ -1,4 +1,3 @@
-#include <stdint.h>
 #ifndef dust_sensor_h
 #define dust_sensor_h
 
