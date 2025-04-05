@@ -12,8 +12,8 @@
 #define NUMBER_OF_ATTEMPTS 10
 #define uS_TO_S_FACTOR 1000000
 
-// 30 s - time spent on measurement and sending data
-const uint64_t TIME_TO_SLEEP = (uint64_t)uS_TO_S_FACTOR * 60 * 60 - 30;
+// 39 s - average time spent on measurement and sending data
+const uint64_t TIME_TO_SLEEP = (uint64_t)uS_TO_S_FACTOR * 60 * 60 - 39;
 const char* URL = "https://api.thingspeak.com/update.json";
 
 HTTPClient https;
