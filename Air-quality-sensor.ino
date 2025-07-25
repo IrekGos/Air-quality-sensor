@@ -12,8 +12,8 @@
 #define NUMBER_OF_ATTEMPTS 10
 #define uS_TO_S_FACTOR 1000000
 
-// 39 s - average time spent on measurement and sending data
-const uint64_t TIME_TO_SLEEP = (uint64_t)uS_TO_S_FACTOR * 60 * 60 - 39;
+// 53 s - average time spent on measurement and sending data
+const uint64_t TIME_TO_SLEEP = (uint64_t)uS_TO_S_FACTOR * 60 * 60 - 53;
 const char* URL = "https://api.thingspeak.com/update.json";
 
 HTTPClient https;
@@ -63,12 +63,14 @@ void deep_sleep(uint64_t time) {
 
 void loop() {
   JsonDocument dust_results, results;
+
   uint8_t successful_readings = dustsensor.measure_air_quality(dust_results);
+  results["field7"] = successful_readings;
+
   if (successful_readings) {
     results["field1"] = dust_results["PM1"];
     results["field2"] = dust_results["PM2.5"];
     results["field3"] = dust_results["PM10"];
-    results["field7"] = successful_readings;
   }
 
   float internal_temp = measurements.measure_internal_temp();
