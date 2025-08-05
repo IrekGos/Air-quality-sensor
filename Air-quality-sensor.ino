@@ -89,11 +89,12 @@ void loop() {
     Serial.flush();
   }
 
-  for (uint8_t i = 0; i < NUMBER_OF_ATTEMPTS; i++) {
+  for (uint8_t i = 1; i <= NUMBER_OF_ATTEMPTS; i++) {
     wifi.connect();
     if (DEBUG_MODE)
       Serial.printf("is WiFi connected: %d\n", wifi.is_connected());
     if (wifi.is_connected()) {
+      results["field8"] = i;
       if (send_data(results)) {
         wifi.turn_off();
         break;
