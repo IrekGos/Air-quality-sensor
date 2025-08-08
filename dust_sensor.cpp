@@ -15,32 +15,29 @@
 
 const uint64_t TIME_TO_SLEEP = (uint64_t)uS_TO_S_FACTOR * 30;
 
-const uint8_t reset_pin = D3;
-const uint8_t sleep_mode_pin = D2;
+const uint8_t mosfet_pin = D7;
 
 void DustSensor::dust_sensor_init() {
   Wire.begin();
   Wire.setClock(I2C_FREQUENCY);
   Wire.setTimeOut(200);
-  gpio_hold_dis((gpio_num_t)sleep_mode_pin);
-  pinMode(reset_pin, OUTPUT);
-  pinMode(sleep_mode_pin, OUTPUT);
-  digitalWrite(reset_pin, HIGH);
-  digitalWrite(sleep_mode_pin, LOW);
+  gpio_hold_dis((gpio_num_t)mosfet_pin);
+  pinMode(mosfet_pin, OUTPUT);
+  digitalWrite(mosfet_pin, LOW);
 }
 
 void DustSensor::sleep_mode(bool mode) {
   if (mode) {
-    digitalWrite(sleep_mode_pin, LOW);
+    digitalWrite(mosfet_pin, LOW);
   } else {
-    digitalWrite(sleep_mode_pin, HIGH);
+    digitalWrite(mosfet_pin, HIGH);
   }
 }
 
 void DustSensor::reset() {
-  digitalWrite(reset_pin, LOW);
+  sleep_mode(true);
   light_sleep(0.5 * uS_TO_S_FACTOR);
-  digitalWrite(reset_pin, HIGH);
+  sleep_mode(false);
 }
 
 void DustSensor::light_sleep(uint64_t time) {
@@ -112,9 +109,8 @@ uint8_t DustSensor::measure_air_quality(JsonDocument &results) {
     light_sleep(1 * uS_TO_S_FACTOR);
   }
   sleep_mode(true);
-  reset();
-  // hold sleep_mode_pin state during deep sleep
-  gpio_hold_en((gpio_num_t)sleep_mode_pin);
+  // hold mosfet_pin state during deep sleep
+  gpio_hold_en((gpio_num_t)mosfet_pin);
 
   if (successful_readings > 0) {
     calc_mean_value(&accumulator, successful_readings);
