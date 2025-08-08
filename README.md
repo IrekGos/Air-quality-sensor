@@ -14,8 +14,10 @@ Simple IoT system that measures air quality. Based on the ESP32-S3, written in A
 | -------- | ------ |
 | GPIO 5   | SDA    |
 | GPIO 6   | SCL    |
-| GPIO 3   | SET    |
-| GPIO 4   | RESET  |
+
+| ESP32-S3 | MOSFET |
+| -------- | ------ |
+| GPIO 44  | Gate   |
 
 ## Setup
 
