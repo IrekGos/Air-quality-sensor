@@ -7,6 +7,7 @@ Simple IoT system that measures air quality. Based on the ESP32-S3, written in A
 - XIAO ESP32-S3
 - Grove - Laser PM2.5 Sensor (HM3301)
 - MCP9700A analog temperature sensor
+- IRL540N MOSFET
 
 ## Default pinout
 
