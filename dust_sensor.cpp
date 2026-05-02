@@ -62,7 +62,10 @@ void DustSensor::parse_result(uint8_t *raw_bytes, measurement_result *result) {
 
 bool DustSensor::are_values_correct(measurement_result *result) {
   int bad_value = (1 << 16) - 1;
-  return result->pm1 != bad_value && result->pm2_5 != bad_value && result->pm10 != bad_value;
+  bool valid_range = result->pm1 != bad_value && result->pm2_5 != bad_value && result->pm10 != bad_value;
+  // Reject physically impossible measurements: smaller particles must not exceed larger particles
+  bool physically_valid = result->pm1 <= result->pm2_5 && result->pm2_5 <= result->pm10;
+  return valid_range && physically_valid;
 }
 
 void DustSensor::add_result_to_accumulator(measurement_result *result, measurement_result *accumulator) {
